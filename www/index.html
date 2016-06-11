@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <title>Sample "Jons ESP8266 Web Server" Application</title>
+  </head>
+  <body bgcolor=white>
+
+    <table border="0" cellpadding="10">
+      <tr>
+        <td>
+          <img src="esp.jpg">
+        </td>
+        <td>
+          <h1>ESP8266 Flash memory HTTP server</h1>
+        </td>
+      </tr>
+    </table>
+
+    <p>Welcome to the ESP8266 (ESP-12 Or similar) web server demo.</p>
+    <p>Acting as a static web page server with a filesystem in flash is pushing it a little for these modules.
+     </p>
+     <p>I wrote this page with vi, nobody said I was a web designer.</p>
+
+     <p>Initially I had problems making TCP work on this module. I am more used to vanilla sockets or write()
+        interface rather than the mandated callbacks.</p>
+     <p>The basic HTTP server is based on the well structured TCP server demo code by Tom Trebisky:<br>
+      <a href="tcp_server.c">tcp_server.c</a> Original link <a href="http://cholla.mmto.org/esp8266/OLD/sdk/tcp_server.c">http://cholla.mmto.org/esp8266/OLD/sdk/tcp_server.c</a>
+      </p>
+     <p>I modified the TCP server to make my own demo code, that spat out a continuous stream of text in response
+        to a telnet connection:<br>
+      </p>
+      <p>The memory filesystem code is a slightly modified version of this code:<br>
+      <a href="mfs.c">mfs.c</a> <a href="mfs.h">mfs.h</a> Taken from this project : https://github.com/cnlohr/esp8266ws2812i2s
+      </p>
+      <p>I am using the ws2811 project above for some of my Xmas lights, very impressive work.<br><br>
+      <p>While trying to fix the dns server I knocked up I did a lot of google searches for various esp API calls, one of these 
+	was a DNS resolver that was frankly much better looking than mine, so that is now included in this project.
+      </p>
+
+      <p>Well, that's about it for this demo. Let's fill the rest of this 3 mega bytes with some of my home photos :-)
+      </p>
+	<a href="CLAY.JPG">CLAY.JPG</a>
+	<br>
+ 	<a href="DCP_0560.JPG">DCP_0560.JPG</a>
+	<br>
+	<a href="DCP_0718.JPG">DCP_0718.JPG</a>
+	<br>
+	<a href="frome6.jpg">frome6.jpg</a>
+	<br>
+	<a href="PIC00150.jpg">PIC00150.jpg</a>
+	<br>
+	<a href="PIC00166.jpg">PIC00166.jpg</a>
+	<br>
+	<a href="CRASH1.JPG">CRASH1.JPG</a>
+	<br>
+	<a href="DCP_0675.JPG">DCP_0675.JPG</a>
+	<br>
+	<a href="DCP_2125.JPG">DCP_2125.JPG</a>
+	<br>
+	<a href="frome4.jpg">frome4.jpg</a>
+	<br>
+	<a href="PIC00002.jpg">PIC00002.jpg</a>
+	<br>
+	<a href="PIC00165.jpg">PIC00165.jpg</a>
+	<br>
+
+
+      <p>By J.Andrews - jon@jonshouse.co.uk</p>
+  </body>
+</html>
+
+

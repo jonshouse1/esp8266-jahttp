@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Create a memory file system compressed image and compare it to the one we are currently using, update if required
+# The memory file is a FAT followed by non compressed files, use "hexdump -C page.mpfs |more" to see
+
+
+FSDIR="www"
+
+if [ -f firmware/MEMORY_FS_OUT_OF_DATE ]; then
+	rm firmware/MEMORY_FS_OUT_OF_DATE
+fi
+
+# What is the current MD5 hash of the compressed web pages ?
+CURHASH=`md5sum firmware/page.mpfs | cut -d' ' -f1`
+echo "Last flashed compressed memory file has MD5 hash=[$CURHASH]"
+
+
+# Now compress current set of files, this is still quick compared to flashing them into the esp module
+./tools/mfsmaker $FSDIR page.mpfs
+mv mfs_filecount.h include/
+echo -n "Memory File system image size is "
+ls -lh page.mpfs |cut -d' ' -f5
+
+# Take the MD5sum of the newer pages
+NEWHASH=`md5sum page.mpfs |cut -d' ' -f1`
+echo "Curr flashed compressed memory file has MD5 hash=[$NEWHASH]"
+
+if [ "$CURHASH" == "$NEWHASH" ]; then
+	echo "Same, no need to re-flash memory filesystem"
+	if [ -f page.mpfs ]; then
+		rm page.mpfs
+	fi
+	
+	if [ -f firmware/MEMORY_FS_OUT_OF_DATE ]; then
+		rm firmware/MEMORY_FS_OUT_OF_DATE 
+	fi
+else	
+	echo "Needs re-flashing, put binary data in flash directory"
+	mv page.mpfs firmware/
+	touch firmware/MEMORY_FS_OUT_OF_DATE 
+fi

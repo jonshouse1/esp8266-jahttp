@@ -1,0 +1,19 @@
+#!/bin/bash
+# Flash JAHTTP onto a module
+
+#BAUD=115200
+BAUD=230400
+PORT=/dev/ttyUSB0
+
+
+
+# Flash new version of code onto module
+if [ -f ./firmware/MEMORY_FS_OUT_OF_DATE ]; then
+# Update memory including memory file system segment
+	esptool.py --port $PORT --baud $BAUD write_flash 0x40000 firmware/0x40000.bin 0x00000 firmware/0x00000.bin 0x100000 firmware/page.mpfs
+	rm ./firmware/MEMORY_FS_OUT_OF_DATE
+else
+	esptool.py --port $PORT --baud $BAUD write_flash 0x40000 firmware/0x40000.bin 0x00000 firmware/0x00000.bin
+fi
+
+
